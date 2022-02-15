@@ -1,5 +1,5 @@
 set(TEST_NAME tests-for-channel)
-set(SOURCE_FILES main.c test_data_builders.c test_data_builders.h)
+set(SOURCE_FILES main.c builders.c builders.h)
 set(CMAKE_C_STANDARD 11)
 enable_testing()
 find_package(cgreen)
