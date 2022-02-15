@@ -1,7 +1,7 @@
 #include <cgreen/cgreen.h>
 #include "test_channel.c"
 
-TestSuite *ipaddress_suite() {
+TestSuite *ipaddress_suite() {Cla
     TestSuite *suite = create_test_suite();
     add_test_with_context(suite, ChannelFixture, the_default_address);
     add_test_with_context(suite, ChannelFixture, switching_to_a_famous_ip_address);
