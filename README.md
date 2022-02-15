@@ -12,3 +12,7 @@ should give you inspiration to add more builders.
 - review sample_solution
 - formulate learning goals
 - formulate learning hour 4C structure
+
+# Links
+
+This kata is sponsored by [ProAgile](https://proagile.se).
