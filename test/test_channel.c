@@ -4,9 +4,11 @@
 
 Describe(ChannelFixture);
 
+/* Note: After a successful refactoring, this global is removed. */
 Channel testChannel;
 
 BeforeEach(ChannelFixture) {
+    /* Note: After a successful refactoring, this function will be empty. */
     testChannel.address = buildIPAddress(anIPAddress());
     testChannel.protocol = LEGACY_UDP;
     testChannel.port = 1;
@@ -14,6 +16,45 @@ BeforeEach(ChannelFixture) {
 
 AfterEach(ChannelFixture) {
 }
+
+/*
+ * Tests for should_send_packet written using a fixture that is modified in
+ * several testcases. Rewrite this to use test-data builders instead.
+ *
+ * Note: There already exists some builders, but you will have to add more.
+ */
+
+Ensure(ChannelFixture, udp_protocol_always_sends) {
+    assert_that(should_send_packet(testChannel), is_equal_to(Send));
+}
+
+Ensure(ChannelFixture, tcp_protocol_drops_if_buffer_is_full) {
+    testChannel.protocol = LEGACY_TCP;
+    testChannel.connected = 0;
+    testChannel.bufferFull = 1;
+    assert_that(should_send_packet(testChannel), is_equal_to(Drop));
+}
+
+Ensure(ChannelFixture, tcp_protocol_buffers_if_not_connected_and_buffer_is_not_full) {
+    testChannel.protocol = LEGACY_TCP;
+    testChannel.connected = 0;
+    testChannel.bufferFull = 0;
+    assert_that(should_send_packet(testChannel), is_equal_to(Buffer));
+}
+
+Ensure(ChannelFixture, tcp_protocol_sends_if_connected) {
+    testChannel.protocol = LEGACY_TCP;
+    testChannel.connected = 1;
+    assert_that(should_send_packet(testChannel), is_equal_to(Send));
+}
+
+
+/*
+ * Tests for builders
+ *
+ * Use this as a reference on how to create new builders and
+ * as documentation for how to use existing builders.
+ */
 
 Ensure(ChannelFixture, the_default_address) {
     IPAddress address = buildIPAddress(anIPAddress());
@@ -95,37 +136,4 @@ Ensure(ChannelFixture, setting_simple_and_nested_fields) {
     assert_that(channel.address.bytes[1], is_equal_to(1));
     assert_that(channel.address.bytes[2], is_equal_to(1));
     assert_that(channel.address.bytes[3], is_equal_to(1));
-}
-
-/* GOALS Tuesday
- * skriva om fixturer till test data builder pattern
- * "realistiskt liten funktion(er)" som använder strukturerna
- * tester som testar funktionerna
- * learning hour goal: skriv om från tester+fixtur till TestDataBuilder mönster
- */
-
-// fixture tests below
-
-Ensure(ChannelFixture, udp_protocol_always_sends) {
-    assert_that(should_send_packet(testChannel), is_equal_to(Send));
-}
-
-Ensure(ChannelFixture, tcp_protocol_drops_if_buffer_is_full) {
-    testChannel.protocol = LEGACY_TCP;
-    testChannel.connected = 0;
-    testChannel.bufferFull = 1;
-    assert_that(should_send_packet(testChannel), is_equal_to(Drop));
-}
-
-Ensure(ChannelFixture, tcp_protocol_buffers_if_not_connected_and_buffer_is_not_full) {
-    testChannel.protocol = LEGACY_TCP;
-    testChannel.connected = 0;
-    testChannel.bufferFull = 0;
-    assert_that(should_send_packet(testChannel), is_equal_to(Buffer));
-}
-
-Ensure(ChannelFixture, tcp_protocol_sends_if_connected) {
-    testChannel.protocol = LEGACY_TCP;
-    testChannel.connected = 1;
-    assert_that(should_send_packet(testChannel), is_equal_to(Send));
 }
