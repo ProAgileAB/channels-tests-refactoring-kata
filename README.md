@@ -7,8 +7,6 @@ the Test Data Builder pattern. The starting point already has some examples of t
 should give you inspiration to add more builders.
 
 # TODO
-- formulate learning goals
-- formulate learning hour 4C structure
 - try again after the code is refactored
 
 # Links
