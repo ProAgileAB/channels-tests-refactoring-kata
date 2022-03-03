@@ -9,14 +9,16 @@ should give you inspiration to add more builders.
 # Problems to work on
 
 1. Begin by reading through builders.h and builder.c.
-  a) How many builder functions already exists? Count all functions.
-  b) For what structures?
-  c) For what fields?
+  * How many builder functions already exists? Count all functions.
+  * For what structures?
+  * For what fields?
 2. test_channel.c contains fixture based tests for the should_send_packet function (top half of file) and tests for builders (bottom half).
-  a) How many tests are fixture based?
-  b) How many tests are there for test data builder functions?
-  c) Place Arrange, Act, Assert comments in each of the should_send_packet tests (as best as you can)
-3. Time for refactoring! There are several TODO items in test_channel.c. Some are marked EASY and HARD; Start with an Easy!
+  * How many tests are fixture based?
+  * How many tests are there for test data builder functions?
+  * Place Arrange, Act, Assert comments in each of the should_send_packet tests (as best as you can)
+3. Time for refactoring!
+  * There are several TODO items in test_channel.c
+  * Some are marked EASY and HARD - start with an EASY!
 
 # Links
 
