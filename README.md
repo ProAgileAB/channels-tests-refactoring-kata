@@ -10,7 +10,7 @@ should give you inspiration to add more builders.
 
 1. Begin by reading through builders.h and builder.c.
   * How many builder functions already exists? Count all functions.
-  * For what structures?
+  * What structs have at least one builder function?
   * Compare with the production structs in channel.h, which fields lack builders?
 2. test_channel.c contains fixture based tests for the should_send_packet function (top half of file) and tests for builders (bottom half).
   * How many tests are fixture based?
