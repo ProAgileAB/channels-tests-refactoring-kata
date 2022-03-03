@@ -41,11 +41,6 @@ ChannelBuilderStruct withPort(int port, ChannelBuilderStruct builder) {
     return builder;
 }
 
-ChannelBuilderStruct withProtocol(Protocol protocol, ChannelBuilderStruct builder) {
-    builder.protocol = protocol;
-    return builder;
-}
-
 ChannelBuilderStruct withChannelAddress(IPAddress address, ChannelBuilderStruct builder) {
     builder.address = address;
     return builder;
