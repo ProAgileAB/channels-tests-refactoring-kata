@@ -4,24 +4,23 @@
 
 Describe(ChannelFixture);
 
-/* Note: After a successful refactoring, this global is removed. */
+// TODO/HARD: remove this global variable
 Channel testChannel;
 
 BeforeEach(ChannelFixture) {
-    /* Note: After a successful refactoring, this function will be empty. */
     testChannel.address = buildIPAddress(anIPAddress());
+    // TODO/EASY: add a withProtocol builder for the Channel struct
     testChannel.protocol = LEGACY_UDP;
     testChannel.port = 1;
+    // TODO/EASY: rewrite this fixture to use the Channel builder functions
+    // TODO/HARD: clear out this fixture, moving the Arrange part to individual tests
 }
 
 AfterEach(ChannelFixture) {
 }
 
 /*
- * Tests for should_send_packet written using a fixture that is modified in
- * several testcases. Rewrite this to use test-data builders instead.
- *
- * Note: There already exists some builders, but you will have to add more.
+ * Tests for should_send_packet
  */
 
 Ensure(ChannelFixture, udp_protocol_always_sends) {
@@ -29,12 +28,17 @@ Ensure(ChannelFixture, udp_protocol_always_sends) {
 }
 
 Ensure(ChannelFixture, tcp_protocol_drops_if_buffer_is_full) {
+    // TODO/EASY: Add builder function for protocol
+    // TODO: Add builder functions for connected, call them withConnection and notConnected or similar
+    // TODO: Add builder functions for bufferFull, call them something readable
+    // TODO: Rewrite the arrange part of test with your TestDataBuilder functions
     testChannel.protocol = LEGACY_TCP;
     testChannel.connected = 0;
     testChannel.bufferFull = 1;
     assert_that(should_send_packet(testChannel), is_equal_to(Drop));
 }
 
+// TODO: rewrite test using TestDataBuilder pattern
 Ensure(ChannelFixture, tcp_protocol_buffers_if_not_connected_and_buffer_is_not_full) {
     testChannel.protocol = LEGACY_TCP;
     testChannel.connected = 0;
@@ -42,6 +46,7 @@ Ensure(ChannelFixture, tcp_protocol_buffers_if_not_connected_and_buffer_is_not_f
     assert_that(should_send_packet(testChannel), is_equal_to(Buffer));
 }
 
+// TODO: rewrite test using TestDataBuilder pattern
 Ensure(ChannelFixture, tcp_protocol_sends_if_connected) {
     testChannel.protocol = LEGACY_TCP;
     testChannel.connected = 1;
@@ -50,9 +55,8 @@ Ensure(ChannelFixture, tcp_protocol_sends_if_connected) {
 
 
 /*
- * Tests for builders
- *
- * Use this as a reference on how to create new builders and
+ * Tests for builders - no TODOs below!
+ * Use these as a reference on how to create new builders and
  * as documentation for how to use existing builders.
  */
 
@@ -90,22 +94,17 @@ Ensure(ChannelFixture, setting_port_to_2) {
     assert_that(channel.port, is_equal_to(2));
 }
 
-Ensure(ChannelFixture, setting_protocol_to_legacy_udp) {
-    Channel channel = buildChannel(
-        withProtocol(LEGACY_UDP,
-        aChannel())
-    );
-    assert_that(channel.protocol, is_equal_to(LEGACY_UDP));
-}
-
 Ensure(ChannelFixture, setting_2_channel_parameters) {
     Channel channel = buildChannel(
+        withChannelAddress(buildIPAddress(anIPAddress()),
         withPort(2,
-        withProtocol(LEGACY_UDP,
         aChannel()))
     );
     assert_that(channel.port, is_equal_to(2));
-    assert_that(channel.protocol, is_equal_to(LEGACY_UDP));
+    assert_that(channel.address.bytes[0], is_equal_to(127));
+    assert_that(channel.address.bytes[1], is_equal_to(0));
+    assert_that(channel.address.bytes[2], is_equal_to(0));
+    assert_that(channel.address.bytes[3], is_equal_to(1));
 }
 
 Ensure(ChannelFixture, setting_address_of_channel) {
@@ -122,16 +121,14 @@ Ensure(ChannelFixture, setting_address_of_channel) {
 Ensure(ChannelFixture, setting_simple_and_nested_fields) {
     Channel channel = buildChannel(
         withPort(2,
-        withProtocol(LEGACY_UDP,
         withChannelAddress(
             buildIPAddress(
                 withIP(1, 1, 1, 1,
                 anIPAddress())
             ),
         aChannel()))
-    ));
+    );
     assert_that(channel.port, is_equal_to(2));
-    assert_that(channel.protocol, is_equal_to(LEGACY_UDP));
     assert_that(channel.address.bytes[0], is_equal_to(1));
     assert_that(channel.address.bytes[1], is_equal_to(1));
     assert_that(channel.address.bytes[2], is_equal_to(1));
