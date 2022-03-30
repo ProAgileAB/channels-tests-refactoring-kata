@@ -8,9 +8,8 @@ Describe(ChannelFixture);
 Channel testChannel;
 
 BeforeEach(ChannelFixture) {
-    // TODO/EASY: rewrite this fixture to use the Channel builder functions
-    // That is, set address- and port fields using the builder instead of
-    // field assignment!
+    // TODO/EASY: rewrite the next two assignments to use the Channel builder functions instead
+    // That is, assign testChannel using a channel builder
     testChannel.address = buildIPAddress(anIPAddress());
     testChannel.port = 1;
 
