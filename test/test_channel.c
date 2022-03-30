@@ -8,11 +8,15 @@ Describe(ChannelFixture);
 Channel testChannel;
 
 BeforeEach(ChannelFixture) {
-    testChannel.address = buildIPAddress(anIPAddress());
-    // TODO/EASY: add a withProtocol builder for the Channel struct
-    testChannel.protocol = LEGACY_UDP;
-    testChannel.port = 1;
     // TODO/EASY: rewrite this fixture to use the Channel builder functions
+    // That is, set address- and port fields using the builder instead of
+    // field assignment!
+    testChannel.address = buildIPAddress(anIPAddress());
+    testChannel.port = 1;
+
+    // TODO/EASY: Then add a withProtocol builder for the Channel struct
+    testChannel.protocol = LEGACY_UDP;
+
     // TODO/HARD: clear out this fixture, moving the Arrange part to individual tests
 }
 
