@@ -24,3 +24,5 @@ enum PacketAction {
 };
 
 enum PacketAction should_send_packet(Channel ch);
+
+void initChannel(Channel* channel);
