@@ -16,7 +16,9 @@ BeforeEach(ChannelFixture) {
     // TODO/EASY: Then add a withProtocol builder for the Channel struct
     testChannel.protocol = LEGACY_UDP;
 
-    // TODO/HARD: clear out this fixture, moving the Arrange part to individual tests
+    // TODO/HARD: Move all setup/arrange code away from this BeforeEach fixture function, into
+    // individual tests - thus localising the arrange part and (hopefully) make it easier to
+    // read each test. 
 }
 
 AfterEach(ChannelFixture) {
