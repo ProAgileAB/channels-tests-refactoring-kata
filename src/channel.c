@@ -12,3 +12,10 @@ enum PacketAction should_send_packet(Channel ch) {
             return Buffer;
     }
 }
+
+void initChannel(Channel* channel) {
+    IPAddress address = {.bytes = {127, 0, 0, 1}};
+    channel->address = address;
+    channel->port = 1;
+    channel->protocol = LEGACY_UDP;
+}
