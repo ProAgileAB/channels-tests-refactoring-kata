@@ -29,7 +29,7 @@ to have something to test against.
     * Answer:
   * What are the names of the structs that have at least one builder function?
     * Answer:
-  * Compare with the production structs in channel.h, which fields lack builders?
+  * Compare with the production structs in `channel.h`, which fields lack builders?
     * Answer:
 3. Time for refactoring!
   * There are several TODO items in test_channel.c
