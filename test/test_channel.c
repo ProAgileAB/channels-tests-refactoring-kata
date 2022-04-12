@@ -8,17 +8,13 @@ Describe(ChannelFixture);
 Channel testChannel;
 
 BeforeEach(ChannelFixture) {
-    // TODO/EASY: rewrite the next two assignments to use the Channel builder functions instead
-    // That is, assign testChannel using a channel builder
-    testChannel.address = buildIPAddress(anIPAddress());
-    testChannel.port = 1;
+    // TODO/HARD: rewrite this setup to use Test Data Builder pattern, instead
+    // of calling initChannel function.
+    // Note: you will have to add a withProtocol builder for the Channel struct
+    // Without looking at initChannel source code - what does initChannel do?
+    initChannel(&testChannel);
 
-    // TODO/EASY: Then add a withProtocol builder for the Channel struct
-    testChannel.protocol = LEGACY_UDP;
-
-    // TODO/HARD: Move all setup/arrange code away from this BeforeEach fixture function, into
-    // individual tests - thus localising the arrange part and (hopefully) make it easier to
-    // read each test. 
+    // TODO/HARD: Move the setup code into each individual test, simplifing the tests as you go!
 }
 
 AfterEach(ChannelFixture) {
