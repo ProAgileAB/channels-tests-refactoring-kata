@@ -18,4 +18,5 @@ void initChannel(Channel* channel) {
     channel->address = address;
     channel->port = 1;
     channel->protocol = LEGACY_UDP;
+    channel->connected = 0;
 }
