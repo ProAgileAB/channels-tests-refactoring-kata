@@ -14,7 +14,16 @@ BeforeEach(ChannelFixture) {
     // Without looking at initChannel source code - what does initChannel do?
     initChannel(&testChannel);
 
-    // TODO/HARD: Move the setup code into each individual test, simplifing the tests as you go!
+    // TODO/HARD: Move the setup code into each individual test, simplifying the tests as you go!
+}
+
+void setFullTCPChannel(Channel* testChannel) {
+    testChannel->bufferFull = 1;
+    testChannel->protocol = LEGACY_TCP;
+}
+
+void connectIt(Channel* channel) {
+    channel->connected = 1;
 }
 
 AfterEach(ChannelFixture) {
@@ -33,24 +42,21 @@ Ensure(ChannelFixture, tcp_protocol_drops_if_buffer_is_full) {
     // TODO: Add builder functions for connected, call them withConnection and notConnected or similar
     // TODO: Add builder functions for bufferFull, call them something readable
     // TODO: Rewrite the arrange part of test with your TestDataBuilder functions
-    testChannel.protocol = LEGACY_TCP;
-    testChannel.connected = 0;
-    testChannel.bufferFull = 1;
+    setFullTCPChannel(&testChannel);
     assert_that(should_send_packet(testChannel), is_equal_to(Drop));
 }
 
 // TODO: rewrite test using TestDataBuilder pattern
 Ensure(ChannelFixture, tcp_protocol_buffers_if_not_connected_and_buffer_is_not_full) {
-    testChannel.protocol = LEGACY_TCP;
-    testChannel.connected = 0;
+    setFullTCPChannel(&testChannel);
     testChannel.bufferFull = 0;
     assert_that(should_send_packet(testChannel), is_equal_to(Buffer));
 }
 
 // TODO: rewrite test using TestDataBuilder pattern
 Ensure(ChannelFixture, tcp_protocol_sends_if_connected) {
-    testChannel.protocol = LEGACY_TCP;
-    testChannel.connected = 1;
+    setFullTCPChannel(&testChannel);
+    connectIt(&testChannel);
     assert_that(should_send_packet(testChannel), is_equal_to(Send));
 }
 
